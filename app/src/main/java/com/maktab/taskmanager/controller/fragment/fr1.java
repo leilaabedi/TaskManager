@@ -1,6 +1,5 @@
 package com.maktab.taskmanager.controller.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,11 +14,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.maktab.taskmanager.R;
-import com.maktab.taskmanager.controller.activity.TaskPagerActivity;
 import com.maktab.taskmanager.model.StateEnum;
 import com.maktab.taskmanager.model.Task;
 import com.maktab.taskmanager.repository.TaskRepository;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +34,8 @@ public class fr1 extends Fragment {
 
     private RecyclerView mRecyclerView;
     private TaskRepository mRepository;
+    public static final String FRAGMENT_TAG_TASK_MAN = "TaskManager";
+    public static final int REQUEST_CODE_TASK_MAN = 0;
 
 
     public static fr1 newInstance() {
@@ -100,8 +102,13 @@ public class fr1 extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = TaskPagerActivity.newIntent(getActivity(), mTask.getId());
-                    startActivity(intent);
+                  TaskDetailFragment taskDetailFragment = TaskDetailFragment.newInstance( mTask.getId());
+                    taskDetailFragment.setTargetFragment(fr1.this,REQUEST_CODE_TASK_MAN);
+
+
+                    taskDetailFragment.show(
+                            getActivity().getSupportFragmentManager(),
+                            FRAGMENT_TAG_TASK_MAN);
 
                 }
             });
@@ -110,9 +117,21 @@ public class fr1 extends Fragment {
         public void bindTask(Task task) {
 
             mTask = task;
-            mTextViewTitle.setText(task.getMname());
+            mTextViewTitle.setText(task.getname());
 
-            mTextViewdes.setText(task.getDate().toString());
+            Date temp=task.getDate();
+            String pattern = "yyyy-MM-dd";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+            String date = simpleDateFormat.format(temp);
+            pattern = "HH:mm:ss";
+            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat(pattern);
+            String time = simpleDateFormat1.format(temp);
+
+
+
+
+            mTextViewdes.setText(date+"  "+time);
 
 
     }
