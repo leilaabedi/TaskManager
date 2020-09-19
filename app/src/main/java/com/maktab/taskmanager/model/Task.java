@@ -3,6 +3,7 @@ package com.maktab.taskmanager.model;
 
 import com.maktab.taskmanager.utils.DateUtils;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ public class Task {
     private UUID mId;
     private String mname;
     private Date mDate;
+    private Time mTime;
     private String mDes;
     private String icon;
 
@@ -20,6 +22,16 @@ public class Task {
     public Task() {
         mId = UUID.randomUUID();
         mDate = DateUtils.randomDate();
+        mTime=DateUtils.randomTime();
+
+    }
+
+    public Time getTime() {
+        return mTime;
+    }
+
+    public void setTime(Time Time) {
+        this.mTime = Time;
     }
 
     public Date getDate() {

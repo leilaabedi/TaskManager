@@ -1,7 +1,14 @@
 package com.maktab.taskmanager.utils;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Random;
 
 public class DateUtils {
     public static final int YEAR_START = 2000;
@@ -21,6 +28,14 @@ public class DateUtils {
 
     public static int randBetween(int start, int end) {
         return start + (int)Math.round(Math.random() * (end - start));
+    }
+
+
+    public static Time randomTime(){
+        Random random = new Random();
+          Time time = new Time(random.nextLong());
+          return time;
+
     }
 
 
