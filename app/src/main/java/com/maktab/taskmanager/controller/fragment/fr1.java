@@ -1,5 +1,6 @@
 package com.maktab.taskmanager.controller.fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,6 +38,7 @@ public class fr1 extends Fragment {
     private TaskRepository mRepository;
     public static final String FRAGMENT_TAG_TASK_MAN = "TaskManager";
     public static final int REQUEST_CODE_TASK_MAN = 0;
+    private ImageView img1;
 
 
     public static fr1 newInstance() {
@@ -75,7 +78,8 @@ public class fr1 extends Fragment {
     private void initViews() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         List<Task> tasks = mRepository.getTodoTasks();
-        updateUI();
+        TaskAdapter taskAdapter = new TaskAdapter(tasks);
+        mRecyclerView.setAdapter(taskAdapter);
     }
 
 
@@ -94,6 +98,8 @@ public class fr1 extends Fragment {
 
     private void findViews(View view) {
         mRecyclerView = view.findViewById(R.id.rec1);
+
+
     }
 
 
@@ -108,6 +114,7 @@ public class fr1 extends Fragment {
             super(itemView);
             mTextViewTitle = itemView.findViewById(R.id.row_item_task_title);
             mTextViewdes = itemView.findViewById(R.id.row_item_task_des);
+            img1=itemView.findViewById(R.id.icon_id);
             mRoot = itemView.findViewById(R.id.relative_item_row);
 
 
@@ -131,6 +138,7 @@ public class fr1 extends Fragment {
 
             mTask = task;
             mTextViewTitle.setText(task.getname());
+            img1.setImageResource(R.drawable.add_icon);
 
             Date temp=task.getDate();
             String pattern = "yyyy-MM-dd";

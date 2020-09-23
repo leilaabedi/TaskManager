@@ -1,7 +1,16 @@
 package com.maktab.taskmanager.model;
 
 
+import android.app.Application;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.widget.Button;
+import android.widget.ImageView;
+
+import com.maktab.taskmanager.R;
 import com.maktab.taskmanager.utils.DateUtils;
+import com.maktab.taskmanager.utils.Sortchar;
 
 import java.sql.Time;
 import java.util.Date;
@@ -13,7 +22,7 @@ public class Task {
     private Date mDate;
     private Time mTime;
     private String mDes;
-    private String icon;
+    private Drawable icon;
 
     public UUID getId() {
         return mId;
@@ -25,6 +34,28 @@ public class Task {
         mTime=DateUtils.randomTime();
 
     }
+
+
+    public void setIcon(Drawable icon) {
+        //char ch=mname.charAt(0);
+        //int temp;
+        //Context context = null;
+        //temp= Sortchar.convert(ch);
+       // String str="btn_"+temp;
+
+        icon=getDrawable("btn_1");
+
+
+
+
+
+
+    }
+
+    public Drawable getIcon() {
+        return icon;
+    }
+
 
     public Time getTime() {
         return mTime;
@@ -50,14 +81,6 @@ public class Task {
         this.mDes = mDes;
     }
 
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
     private StateEnum stateEnum;
 
     public String getname() {
@@ -74,5 +97,28 @@ public class Task {
 
     public void setStateEnum(StateEnum stateEnum) {
         this.stateEnum = stateEnum;
+    }
+
+
+    public static Drawable getDrawable(String name) {
+        Context context = YourApplication.getContext();
+        int resourceId = context.getResources().getIdentifier(name, "drawable", YourApplication.getContext().getPackageName());
+        return context.getResources().getDrawable(resourceId);
+    }
+
+
+
+}
+
+class YourApplication extends Application {
+
+    private static YourApplication instance;
+
+    public YourApplication() {
+        instance = this;
+    }
+
+    public static Context getContext() {
+        return instance;
     }
 }
