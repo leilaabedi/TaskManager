@@ -238,9 +238,18 @@ public class TaskDetailFragment extends DialogFragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 StateEnum temp = StateEnum.Done;
+                boolean flag=false;
 
-                if (b == true)
+                if (b == true) {
                     mTask.setStateEnum(temp);
+                    flag=true;
+
+                }
+
+                if (mTask.getStateEnum()==StateEnum.Done && flag==false){
+                    temp = StateEnum.Doing;
+                    mTask.setStateEnum(temp);
+                }
 
             }
         });
