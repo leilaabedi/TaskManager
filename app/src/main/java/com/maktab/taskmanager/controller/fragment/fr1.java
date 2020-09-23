@@ -15,10 +15,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.maktab.taskmanager.R;
 import com.maktab.taskmanager.model.StateEnum;
 import com.maktab.taskmanager.model.Task;
 import com.maktab.taskmanager.repository.TaskRepository;
+import com.maktab.taskmanager.utils.Sortchar;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,6 +41,7 @@ public class fr1 extends Fragment {
     public static final String FRAGMENT_TAG_TASK_MAN = "TaskManager";
     public static final int REQUEST_CODE_TASK_MAN = 0;
     private ImageView img1;
+    FloatingActionButton add_btn;
 
 
     public static fr1 newInstance() {
@@ -72,6 +75,10 @@ public class fr1 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fr1, container, false);
         findViews(view);
         initViews();
+
+        
+
+
         return view;
     }
 
@@ -80,6 +87,8 @@ public class fr1 extends Fragment {
         List<Task> tasks = mRepository.getTodoTasks();
         TaskAdapter taskAdapter = new TaskAdapter(tasks);
         mRecyclerView.setAdapter(taskAdapter);
+
+
     }
 
 
@@ -95,9 +104,9 @@ public class fr1 extends Fragment {
     }
 
 
-
     private void findViews(View view) {
         mRecyclerView = view.findViewById(R.id.rec1);
+        add_btn=view.findViewById(R.id.add_Task);
 
 
     }
@@ -114,7 +123,8 @@ public class fr1 extends Fragment {
             super(itemView);
             mTextViewTitle = itemView.findViewById(R.id.row_item_task_title);
             mTextViewdes = itemView.findViewById(R.id.row_item_task_des);
-            img1=itemView.findViewById(R.id.icon_id);
+            img1 = itemView.findViewById(R.id.icon_id);
+
             mRoot = itemView.findViewById(R.id.relative_item_row);
 
 
@@ -122,8 +132,8 @@ public class fr1 extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                  TaskDetailFragment taskDetailFragment = TaskDetailFragment.newInstance( mTask.getId());
-                    taskDetailFragment.setTargetFragment(fr1.this,REQUEST_CODE_TASK_MAN);
+                    TaskDetailFragment taskDetailFragment = TaskDetailFragment.newInstance(mTask.getId());
+                    taskDetailFragment.setTargetFragment(fr1.this, REQUEST_CODE_TASK_MAN);
 
 
                     taskDetailFragment.show(
@@ -135,73 +145,72 @@ public class fr1 extends Fragment {
         }
 
         public void bindTask(Task task) {
-
             mTask = task;
             mTextViewTitle.setText(task.getname());
-            img1.setImageResource(R.drawable.add_icon);
 
-            Date temp=task.getDate();
+            Date temp = task.getDate();
             String pattern = "yyyy-MM-dd";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
-           String date = simpleDateFormat.format(temp);
+            String date = simpleDateFormat.format(temp);
             /*
             pattern = "HH:mm:ss";
             SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat(pattern);
             String time = simpleDateFormat1.format(temp);
 */
-           String time=task.getTime().toString();
+            String time = task.getTime().toString();
+            mTextViewdes.setText(date + "  " + time);
+
+            String str=task.getname();
+            char ch=str.charAt(0);
+            int position=Sortchar.convert(ch);
+            Sortchar.setImage(position,img1);
 
 
 
-            mTextViewdes.setText(date+"  "+time);
+
+          //  img1.setImageResource(R.mipmap.btn_1);
+
+
+        }
 
 
     }
 
+    private class TaskAdapter extends RecyclerView.Adapter<TaskHolder> {
+        private List<Task> mTasks;
 
-}
+        public TaskAdapter(List<Task> Tasks) {
+            this.mTasks = Tasks;
+        }
 
-private class TaskAdapter extends RecyclerView.Adapter<TaskHolder> {
-    private List<Task> mTasks;
+        public List<Task> getTasks() {
+            return mTasks;
+        }
 
-    public TaskAdapter(List<Task> Tasks) {
-        this.mTasks = Tasks;
+        public void setTasks(List<Task> Tasks) {
+            this.mTasks = Tasks;
+        }
+
+
+        @Override
+        public TaskHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+            View view = layoutInflater.inflate(R.layout.task_row_list, parent, false);
+            TaskHolder taskHolder = new TaskHolder(view);
+            return taskHolder;
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
+            Task task = mTasks.get(position);
+            holder.bindTask(task);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mTasks.size();
+        }
     }
-
-    public List<Task> getTasks() {
-        return mTasks;
-    }
-
-    public void setTasks(List<Task> Tasks) {
-        this.mTasks = Tasks;
-    }
-
-
-    @Override
-    public TaskHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-        View view = layoutInflater.inflate(R.layout.task_row_list, parent, false);
-        TaskHolder taskHolder = new TaskHolder(view);
-        return taskHolder;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
-        Task task = mTasks.get(position);
-        holder.bindTask(task);
-    }
-
-    @Override
-    public int getItemCount() {
-        return mTasks.size();
-    }
-}
-
-
-
-
-
 
 
 }

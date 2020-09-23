@@ -116,9 +116,7 @@ public class TaskDetailFragment extends DialogFragment {
 
         AlertDialog dialog = builder.create();
 
-        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        mTitle.requestFocus();
+
         return dialog;
     }
 

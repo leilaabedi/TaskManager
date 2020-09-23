@@ -22,7 +22,7 @@ public class Task {
     private Date mDate;
     private Time mTime;
     private String mDes;
-    private Drawable icon;
+    private int icon;
 
     public UUID getId() {
         return mId;
@@ -36,23 +36,20 @@ public class Task {
     }
 
 
-    public void setIcon(Drawable icon) {
+    public void setIcon(int icon) {
         //char ch=mname.charAt(0);
         //int temp;
         //Context context = null;
         //temp= Sortchar.convert(ch);
        // String str="btn_"+temp;
 
-        icon=getDrawable("btn_1");
+       // icon.setImageDrawable(getDrawable("btn_1"));
 
-
-
-
-
-
+             //icon=getDrawable("btn_1");
+        icon=getRes(1);
     }
 
-    public Drawable getIcon() {
+    public int getIcon() {
         return icon;
     }
 
@@ -97,6 +94,17 @@ public class Task {
 
     public void setStateEnum(StateEnum stateEnum) {
         this.stateEnum = stateEnum;
+    }
+
+
+
+
+    public static int getRes(int i){
+        Context context = YourApplication.getContext();
+
+        int imageKey = context.getResources().getIdentifier("btn_"+i, "drawable", context.getPackageName());
+        return imageKey;
+
     }
 
 

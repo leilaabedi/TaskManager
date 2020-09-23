@@ -38,6 +38,31 @@ public class TaskRepository {
     }
 
 
+    public List<Task> getdoingTasks() {
+        ArrayList<Task> mtemp = new ArrayList<Task>();
+        for (Task item : mTasks) {
+            if (item.getStateEnum() == StateEnum.Doing) {
+                mtemp.add(item);
+            }
+        }
+
+        return mtemp;
+
+    }
+
+    public List<Task> getdoneTasks() {
+        ArrayList<Task> mtemp = new ArrayList<Task>();
+        for (Task item : mTasks) {
+            if (item.getStateEnum() == StateEnum.Done) {
+                mtemp.add(item);
+            }
+        }
+
+        return mtemp;
+
+    }
+
+
     public void setTasks(List<Task> mTasks) {
         this.mTasks = mTasks;
     }
@@ -46,20 +71,90 @@ public class TaskRepository {
         int rand;
         StateEnum temp = StateEnum.Todo;
         mTasks = new ArrayList<>();
-        for (int i = 0; i < TASK_SIZE; i++) {
-            Task task = new Task();
-            task.setname("task" + i);
-            task.setDes("description" + i);
-            rand = makeRandom();
-            if (rand == 1)
-                task.setStateEnum(temp.Todo);
-            if (rand == 2)
-                task.setStateEnum(temp.Done);
-            if (rand == 3)
-                task.setStateEnum(temp.Doing);
+        //   for (int i = 0; i < TASK_SIZE; i++) {
+        Task task = new Task();
+        task.setname("ارسال تمرين اول");
+        task.setDes("مهلت انجام تمارين جاوا و اندرويد تا روز جمعه است");
+        //rand = makeRandom();
+        //if (rand == 1)
+        task.setStateEnum(temp.Todo);
+        //if (rand == 2)
+        //  task.setStateEnum(temp.Done);
+        //if (rand == 3)
+        //  task.setStateEnum(temp.Doing);
 
-            mTasks.add(task);
-        }
+        mTasks.add(task);
+
+        task = new Task();
+        task.setname("بازي و رياضي");
+        task.setDes("بازي و رياضي تمريني براي افزايش مهارت آموزش رياضي مي باشد");
+        //   rand = makeRandom();
+        // if (rand == 1)
+        task.setStateEnum(temp.Todo);
+        // if (rand == 2)
+        //   task.setStateEnum(temp.Done);
+        //if (rand == 3)
+        //  task.setStateEnum(temp.Doing);
+
+        mTasks.add(task);
+
+
+        task = new Task();
+        task.setname("معكب روبيك");
+        task.setDes("معكب روبيك براي آموزش مفاهيم رياضي مناسب است");
+        //rand = makeRandom();
+        //if (rand == 1)
+        task.setStateEnum(temp.Todo);
+        //if (rand == 2)
+        //  task.setStateEnum(temp.Done);
+        //if (rand == 3)
+        //  task.setStateEnum(temp.Doing);
+
+        mTasks.add(task);
+
+
+        task = new Task();
+        task.setname("پروژه مهندسي نرم افزار");
+        task.setDes("اين پروژه بر اساس كتاب پرسمن مي باشد");
+        task.setStateEnum(temp.Doing);
+        mTasks.add(task);
+
+        task = new Task();
+        task.setname("انجام زمانبندي پايان كار");
+        task.setDes("زمان بندي پايان كار نقشه كشي ساختمان");
+        task.setStateEnum(temp.Doing);
+        mTasks.add(task);
+
+        task = new Task();
+        task.setname("نوشتن طرح كسب و كار");
+        task.setDes("طراحي بيزنس پلن ايده هاي تجاري");
+        task.setStateEnum(temp.Doing);
+        mTasks.add(task);
+
+
+        task = new Task();
+        task.setname("آزمون تافل");
+        task.setDes("آزمون با موفقيت به پايان رسيد");
+        task.setStateEnum(temp.Done);
+        mTasks.add(task);
+
+        task = new Task();
+        task.setname("آزمون دكترا");
+        task.setDes("نتايج اوليه آزمون دكترا مشخص شد ");
+        task.setStateEnum(temp.Done);
+        mTasks.add(task);
+
+        task = new Task();
+        task.setname("انتخاب رشته دكترا");
+        task.setDes("در زمان مقرر انتخاب رشته انجام شد ");
+        task.setStateEnum(temp.Done);
+        mTasks.add(task);
+
+
+
+
+
+
     }
 
     private int makeRandom() {
@@ -72,7 +167,7 @@ public class TaskRepository {
 
 
     public Task getTask(UUID id) {
-        for (Task task: mTasks) {
+        for (Task task : mTasks) {
             if (task.getId().equals(id))
                 return task;
         }
@@ -109,8 +204,6 @@ public class TaskRepository {
         }
         return 0;
     }
-
-
 
 
 }
